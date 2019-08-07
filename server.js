@@ -16,15 +16,36 @@ const router = express.Router();
 
 app.use('/', router);
 
-//handles url http://localhost:6001/products
+//handles url http://localhost:6001/rentals
 router.get("/rentals", (req, res, next) => {
 
     query('SELECT * from rental', (err, data)=> {
         if(!err) {
             res.status(200).json({
-                message:"Products listed.",
+                message:"Rentals listed.",
                 productId:data
             });
+        }
+    });
+});
+
+//handles url http://localhost:6001/rentals/43
+router.get("/rentals/:productId", (req, res, next) => {
+    let rentalId = req.params.productId;
+
+    query(`SELECT * from rental WHERE _id= ${rentalId}`, (err, data)=> {
+        if(!err) {
+            if(data && data.length > 0) {
+
+                res.status(200).json({
+                    message:"Rental found.",
+                    product: data
+                });
+            } else {
+                res.status(200).json({
+                    message:"Rental Not found."
+                });
+            }
         }
     });
 });
