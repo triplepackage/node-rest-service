@@ -1,6 +1,6 @@
 # Node REST Endpoint
 <pre>
-Johns-MBP:node-utilities admin$ node --inspect server.js
+Johns-MBP:node-utilities admin$ nodemon --inspect server.js
 </pre>
 
 To Debug NodeJS
