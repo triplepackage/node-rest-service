@@ -2,7 +2,7 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 const http = require('http');
-const database = require('./database');
+const rentals = require('./api/rentals');
 
 const app = express();
 
@@ -13,60 +13,7 @@ app.use(bodyparser.urlencoded({extended:false}));
 const router = express.Router();
 
 app.use('/', router);
-
-//handles url http://localhost:6001/rentals
-router.get("/rentals", (req, res, next) => {
-
-    database.query('SELECT * from rental', (err, data)=> {
-        if(!err) {
-            res.status(200).json({
-                message:"Rentals listed.",
-                productId:data
-            });
-        }
-    });
-});
-
-//handles url http://localhost:6001/rentals/43
-router.get("/rentals/:productId", (req, res, next) => {
-    let rentalId = req.params.productId;
-
-    database.query(`SELECT * from rental WHERE _id= ${rentalId}`, (err, data)=> {
-        if(!err) {
-            if(data && data.length > 0) {
-
-                res.status(200).json({
-                    message:"Rental found.",
-                    product: data
-                });
-            } else {
-                res.status(200).json({
-                    message:"Rental Not found."
-                });
-            }
-        }
-    });
-});
-
-router.get("/rentals/city/:cityName", (req, res, next) => {
-    let cityName = req.params.cityName;
-
-    database.query(`SELECT * from rental WHERE city= '${cityName}'`, (err, data)=> {
-        if(!err) {
-            if(data && data.length > 0) {
-
-                res.status(200).json({
-                    message:"Rental found.",
-                    product: data
-                });
-            } else {
-                res.status(200).json({
-                    message:"Rental Not found."
-                });
-            }
-        }
-    });
-});
+app.use("/rentals",rentals);
 
 //if we are here then the specified request is not found
 app.use((req,res,next)=> {
