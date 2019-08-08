@@ -48,6 +48,26 @@ router.get("/rentals/:productId", (req, res, next) => {
     });
 });
 
+router.get("/rentals/city/:cityName", (req, res, next) => {
+    let cityName = req.params.cityName;
+
+    database.query(`SELECT * from rental WHERE city= '${cityName}'`, (err, data)=> {
+        if(!err) {
+            if(data && data.length > 0) {
+
+                res.status(200).json({
+                    message:"Rental found.",
+                    product: data
+                });
+            } else {
+                res.status(200).json({
+                    message:"Rental Not found."
+                });
+            }
+        }
+    });
+});
+
 //if we are here then the specified request is not found
 app.use((req,res,next)=> {
     const err = new Error("Not Found");
