@@ -10,7 +10,7 @@ router.get("/", (req, res, next) => {
         if(!err) {
             res.status(200).json({
                 message:"Rentals listed.",
-                productId:data
+                rental:data
             });
         }
     });
@@ -23,10 +23,9 @@ router.get("/:rentalId", (req, res, next) => {
     database.query(`SELECT * from rental WHERE _id= ${rentalId}`, (err, data)=> {
         if(!err) {
             if(data && data.length > 0) {
-
                 res.status(200).json({
                     message:"Rental found.",
-                    product: data
+                    rental: data
                 });
             } else {
                 res.status(200).json({
@@ -43,10 +42,9 @@ router.get("/city/:cityName", (req, res, next) => {
     database.query(`SELECT * from rental WHERE city= '${cityName}'`, (err, data)=> {
         if(!err) {
             if(data && data.length > 0) {
-
                 res.status(200).json({
                     message:"Rental found.",
-                    product: data
+                    rental: data
                 });
             } else {
                 res.status(200).json({

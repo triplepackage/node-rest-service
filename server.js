@@ -3,6 +3,7 @@ const bodyparser = require('body-parser');
 const cors = require('cors');
 const http = require('http');
 const rentals = require('./api/rentals');
+const users = require('./api/users')
 
 const app = express();
 
@@ -10,10 +11,8 @@ app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}));
 
-const router = express.Router();
-
-app.use('/', router);
 app.use("/rentals",rentals);
+app.use("/users",users);
 
 //if we are here then the specified request is not found
 app.use((req,res,next)=> {
@@ -34,7 +33,7 @@ app.use((err,req, res, next) => {
 });
 
 //Use system configuration for port or use 6001 by default.
-const port = process.env.port || 6001;
+const port = process.env.PORT || 8181;
 
 //Create server with exported express app
 const server = http.createServer(app);
