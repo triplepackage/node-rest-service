@@ -5,7 +5,14 @@ const http = require('http');
 const rentals = require('./api/rentals');
 const users = require('./api/users')
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+
+
 const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(cors());
 app.use(bodyparser.json());
