@@ -1,7 +1,5 @@
 # Node REST Endpoint
 
-Live sample on AWS http://ec2-34-204-247-182.compute-1.amazonaws.com:8181/api-docs/
-
 ## Run Locally
 <pre>
 Johns-MBP:node-utilities admin$ nodemon --inspect server.js
